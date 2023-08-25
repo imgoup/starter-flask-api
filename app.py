@@ -6,5 +6,6 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     return 'Hello, world!'
-def h2():
-    return 'H2!'
+@app.route('/user/<username>')
+def profile(username):
+    return f'{username}\'s profile'
