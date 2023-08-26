@@ -12,7 +12,8 @@ def profile(username):
     return f'{username}\'s profile'
 @app.route('/play/<link>')
 def getPlayUrl(link):
-    r = session.get('https://dlpanda.com/?url=https%3A%2F%2Fv.douyin.com%2FiJGmPD6y%2F&token=G7eRpMaa')
+    playload = { 'url': link, 'token': 'G7eRpMaa'}
+    r = session.get('https://dlpanda.com', params=playload)
     data = {
         'id': 1343,
         'url': r.html.find("source", first=True).attrs["src"]
