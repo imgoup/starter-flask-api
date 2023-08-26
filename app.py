@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,jsonify,request 
 import os
 import requests
 from requests_html import HTMLSession
@@ -13,6 +13,10 @@ def profile(username):
 @app.route('/play/<link>')
 def getPlayUrl(link):
     r = session.get('https://dlpanda.com/?url=https%3A%2F%2Fv.douyin.com%2FiJGmPD6y%2F&token=G7eRpMaa')
-    return f'{r.html.find("source", first=True).attrs["src"]}'
+    data = {
+        'id': 1343,
+        'url': r.html.find("source", first=True).attrs["src"]
+    }
+    return jsonify(data)
     
     
