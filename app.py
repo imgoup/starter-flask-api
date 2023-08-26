@@ -1,10 +1,10 @@
 from flask import Flask, jsonify, request
 import os
 import requests
-from requests_html import HTMLSession
+from requests_html import AsyncHTMLSession
 
 app = Flask(__name__)
-session = HTMLSession()
+asession = AsyncHTMLSession()
 
 
 @app.route('/')
@@ -19,10 +19,15 @@ def profile(username):
 
 @app.route('/play', methods=['POST', 'GET'])
 def getPlayUrl():
-    playload = {'url': request.form['link'], 'token': 'G7eRpMaa'}
-    r = session.get('https://dlpanda.com', params=playload)
-    data = {
-        'id': 1343,
-        'url': r.html.find("source", first=True).attrs["src"]
-    }
-    return jsonify(data)
+    async def getPlay():
+        playload = {'url': request.form['link'], 'token': 'G7eRpMaa'}
+        r = await asession.get('https://dlpanda.com', params=playload)
+        data = {
+            'id': 1343,
+            'url': r.html.find("source", first=True).attrs["src"]
+        }
+
+        return data
+    result = asession.run(getPlay,getPlay,getPlay,getPlay,getPlay,getPlay,getPlay,getPlay,getPlay,getPlay)
+    print(result)
+    return result
