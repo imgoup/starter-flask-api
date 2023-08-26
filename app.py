@@ -10,9 +10,9 @@ def hello_world():
 @app.route('/user/<username>')
 def profile(username):
     return f'{username}\'s profile'
-@app.route('/play/<link>')
-def getPlayUrl(link):
-    playload = { 'url': link, 'token': 'G7eRpMaa'}
+@app.route('/play',methods = ['POST', 'GET'])
+def getPlayUrl():
+    playload = { 'url': request.form['link'], 'token': 'G7eRpMaa'}
     r = session.get('https://dlpanda.com', params=playload)
     data = {
         'id': 1343,
